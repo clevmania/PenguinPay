@@ -4,15 +4,271 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".ui.sendmoney.SendMoneyFragment">
 
     <TextView
+        android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Money In Binaria"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/source_sans_pro_semi_bold"
+        android:text="@string/send_money"
+        android:textColor="@color/colorTextBody"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRecipient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorTextHeader"
+        android:text="@string/recipient_information"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilFirstName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeColor="@color/colorTextInputLayoutBorder"
+        app:boxStrokeWidth="1dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecipient">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorEditTextHint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilLastName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeColor="@color/colorTextInputLayoutBorder"
+        app:boxStrokeWidth="1dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilFirstName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieLastName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorEditTextHint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryPicker"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        app:ccp_showFullName="false"
+        app:ccp_showPhoneCode="true"
+        app:ccp_showNameCode="false"
+        app:ccp_contentColor="@color/colorTextBody"
+        app:ccp_showFlag="true"
+        app:ccp_textSize="14sp"
+        android:background="@drawable/country_picker_border"
+        android:gravity="center"
+        app:ccp_autoFormatNumber="true"
+        app:ccp_defaultNameCode="NG"
+        app:ccp_customMasterCountries="KE,NG,TZ,UG"
+        app:layout_constraintBottom_toBottomOf="@+id/tilMobile"
+        app:layout_constraintStart_toStartOf="@+id/tilLastName"
+        app:layout_constraintTop_toTopOf="@+id/tilMobile" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilMobile"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeColor="@color/colorTextInputLayoutBorder"
+        app:boxStrokeWidth="1dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/tilLastName"
+        app:layout_constraintStart_toEndOf="@+id/countryPicker"
+        app:layout_constraintTop_toBottomOf="@+id/tilLastName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieMobile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:hint="@string/mobile"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/colorTextBody" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="16sp"
+        android:textColor="@color/colorTextHeader"
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:text="@string/transfer_details"
+        app:layout_constraintStart_toStartOf="@+id/countryPicker"
+        app:layout_constraintTop_toBottomOf="@+id/countryPicker" />
+
+    <TextView
+        android:id="@+id/tvSendAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/amount_to_send"
+        android:textColor="@color/colorTextBody"
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvTransfer"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransfer" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAmountToSend"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/source_sans_pro_regular"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeColor="@color/colorTextInputLayoutBorder"
+        app:boxStrokeWidth="1dp"
+        app:endIconTint="@color/colorEditTextHint"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/tilMobile"
+        app:layout_constraintStart_toStartOf="@+id/countryPicker"
+        app:layout_constraintTop_toBottomOf="@+id/tvSendAmount">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieSendAmount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:inputType="number"
+            android:textColorHint="@color/colorEditTextHint"
+            app:layout_constraintBottom_toTopOf="@+id/tilMobile" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvRecipientReceives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="16sp"
+        android:textColor="@color/colorTextBody"
+        android:text="@string/recipient_receives"
+        app:layout_constraintStart_toStartOf="@+id/tilAmountToSend"
+        app:layout_constraintTop_toBottomOf="@+id/tilAmountToSend" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAmountToReceive"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/source_sans_pro_regular"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeColor="@color/colorTextInputLayoutBorder"
+        app:boxStrokeWidth="1dp"
+        app:endIconTint="@color/colorEditTextHint"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/tilMobile"
+        app:layout_constraintStart_toStartOf="@+id/tilAmountToSend"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecipientReceives">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieAmountToReceive"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_background"
+            android:enabled="false"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:inputType="number"
+            android:textColorHint="@color/colorEditTextHint"
+            app:layout_constraintBottom_toTopOf="@+id/tilMobile" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSendMoney"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/send"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="@+id/tilAmountToReceive"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tilAmountToReceive"
+        app:layout_constraintTop_toBottomOf="@+id/tilAmountToReceive" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/colorDividerBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTransfer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvTransfer"
+        app:layout_constraintTop_toTopOf="@+id/tvTransfer" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/colorDividerBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRecipient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvRecipient"
+        app:layout_constraintTop_toTopOf="@+id/tvRecipient" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

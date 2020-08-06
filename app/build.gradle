@@ -57,4 +57,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines"
 
+    /**Country Picker*/
+    implementation "com.hbb20:ccp:$ccp"
+
 }

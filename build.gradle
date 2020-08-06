@@ -31,4 +31,5 @@ ext {
     navigation = '2.3.0'
     okhttp = '4.7.2'
     material = '1.2.0'
+    ccp = '2.4.0'
 }

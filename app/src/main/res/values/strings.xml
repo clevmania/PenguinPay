@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">PenguinPay</string>
+    <string name="send_money">Send Money</string>
+    <string name="recipient_information">Recipient Information</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="mobile">Mobile</string>
+    <string name="transfer_details">Transfer Details</string>
+    <string name="recipient_receives">Recipient Receives</string>
+    <string name="amount_to_send">Amount To Send</string>
+    <string name="send">Send Money</string>
 </resources>
