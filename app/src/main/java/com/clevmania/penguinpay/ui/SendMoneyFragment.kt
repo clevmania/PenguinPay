@@ -16,8 +16,10 @@ class SendMoneyFragment : Fragment() {
 
     private lateinit var viewModel: SendMoneyViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.send_money_fragment, container, false)
     }
 
