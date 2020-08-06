@@ -3,7 +3,7 @@ package com.clevmania.penguinpay.ui.utils
 import com.clevmania.penguinpay.PenguinPay
 import com.clevmania.penguinpay.data.PenguinPayRepository
 import com.clevmania.penguinpay.data.PenguinPayService
-import com.clevmania.penguinpay.ui.sendmoney.SendMoneyViewModel
+import com.clevmania.penguinpay.ui.sendmoney.SendMoneyViewModelFactory
 
 /**
  * @author by Lawrence on 8/6/20.
@@ -18,7 +18,7 @@ object InjectorUtils {
         return PenguinPayRepository(providePenguinService())
     }
 
-    fun provideViewModelFactory(): SendMoneyViewModel {
-        return SendMoneyViewModel(providePenguinRepository())
+    fun provideViewModelFactory(): SendMoneyViewModelFactory {
+        return SendMoneyViewModelFactory(providePenguinRepository())
     }
 }

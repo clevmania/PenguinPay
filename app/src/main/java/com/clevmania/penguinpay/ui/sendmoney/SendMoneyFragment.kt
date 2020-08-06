@@ -6,9 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.clevmania.penguinpay.R
 import com.clevmania.penguinpay.model.Rates
 import com.clevmania.penguinpay.ui.constants.Constants
+import com.clevmania.penguinpay.ui.extension.showSnackBar
+import com.clevmania.penguinpay.ui.utils.InjectorUtils
 import com.clevmania.penguinpay.ui.utils.ValidationType
 import com.clevmania.penguinpay.ui.utils.validate
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +23,7 @@ import kotlin.math.roundToInt
 class SendMoneyFragment : Fragment() {
     private var currentExchangeRates : Rates? = null
 
-    private lateinit var viewModel: SendMoneyViewModel
+    private val viewModel by viewModels<SendMoneyViewModel> { InjectorUtils.provideViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +41,39 @@ class SendMoneyFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        with(viewModel){
+            progress.observe(viewLifecycleOwner, Observer {uiEvent ->
+                uiEvent.getContentIfNotHandled()?.let {
+                    toggleProgress(it)
+                }
+            })
 
+            error.observe(viewLifecycleOwner, Observer { uiEvent ->
+                uiEvent.getContentIfNotHandled()?.let {
+                    requireView().showSnackBar(it)
+                }
+            })
+
+            xChangeRates.observe(viewLifecycleOwner, Observer { rateEvent ->
+                rateEvent.getContentIfNotHandled()?.let {
+                    currentExchangeRates = it
+                }
+            })
+        }
+    }
+
+    private fun toggleProgress(it: Boolean) {
+        if(it){
+
+        }else{
+
+        }
     }
 
     private fun validateFields(){
         try{
             if(getLocalExchangeRate() == Constants.RATE_CURRENTLY_UNAVAILABLE){
-//                viewModel.retrieveRates()
+                viewModel.retrieveRates()
             }
             val firstName = tilFirstName.validate(ValidationType.NAME,getString(R.string.first_name))
             val lastName = tilLastName.validate(ValidationType.NAME,getString(R.string.last_name))
@@ -76,7 +106,7 @@ class SendMoneyFragment : Fragment() {
     private fun onCountryChanged(){
         countryPicker.setOnCountryChangeListener {
             if(getLocalExchangeRate() == Constants.RATE_CURRENTLY_UNAVAILABLE){
-//                viewModel.retrieveRates()
+                viewModel.retrieveRates()
             }else{
                 tilAmountToSend.validate(ValidationType.BINARY_AMOUNT,
                     "Amount",editText = tieAmountToReceive,xChangeRate = getLocalExchangeRate())

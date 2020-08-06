@@ -2,7 +2,9 @@ package com.clevmania.penguinpay.ui.extension
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * @author by Lawrence on 8/6/20.
@@ -22,3 +24,15 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         }
     })
 }
+
+fun View.showSnackBar(message: String){
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+}
+
+fun View.makeVisible(){ this.visibility = View.VISIBLE
+}
+
+fun View.makeGone(){ this.visibility = View.GONE
+}
+
+fun View.makeInVisible() { this.visibility = View.INVISIBLE}
