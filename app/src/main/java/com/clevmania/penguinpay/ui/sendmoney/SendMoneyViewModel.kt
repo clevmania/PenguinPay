@@ -25,7 +25,7 @@ class SendMoneyViewModel(private val dataSource : PenguinPayDataSource) : ViewMo
 
     init { retrieveRates() }
 
-    private fun retrieveRates(){
+    fun retrieveRates(){
         viewModelScope.launch {
             _progress.value = EventUtils(true)
             try {

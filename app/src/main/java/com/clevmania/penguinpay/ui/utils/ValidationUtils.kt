@@ -13,11 +13,13 @@ import kotlin.math.pow
  * @author by Lawrence on 8/6/20.
  * for PenguinPay
  */
+class ValidationException (message:String)  : Exception(message)
 
 enum class ValidationType {
     MOBILE, NAME, BINARY_AMOUNT
 }
 
+@Throws(ValidationException::class)
 fun TextInputLayout.validate(validationType: ValidationType,
                              label: String, length : Int?=null, picker: CountryCodePicker? = null,
                              editText: EditText?= null, xChangeRate : Int?=null): String{
@@ -27,6 +29,7 @@ fun TextInputLayout.validate(validationType: ValidationType,
     if (value.trim().isBlank()) {
         this.error = "$label is required"
         this.isErrorEnabled = true
+        throw  ValidationException("$label is required")
     }
 
     when (validationType) {
@@ -34,6 +37,7 @@ fun TextInputLayout.validate(validationType: ValidationType,
             if(TextUtils.isDigitsOnly(value)){
                 this.error = "$label cannot be a number"
                 this.isErrorEnabled = true
+                throw  ValidationException("$label cannot be a number")
             }
         }
         ValidationType.BINARY_AMOUNT -> {
@@ -60,13 +64,11 @@ fun TextInputLayout.validate(validationType: ValidationType,
                 if(!it.isValidFullNumber){
                     this.error = "$label Number is not valid"
                     this.isErrorEnabled = true
+                    throw  ValidationException("$label Number is not valid")
                 }else{
                     this.isErrorEnabled = false
                 }
             }
-        }
-        else -> {
-            //No type is provided, please proceed
         }
     }
 
