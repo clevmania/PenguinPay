@@ -5,6 +5,10 @@ package com.clevmania.penguinpay.ui.constants
  * for PenguinPay
  */
 object Constants {
+    const val KENYA: String = "KE"
+    const val TANZANIA: String = "TZ"
+    const val UGANDA: String = "UG"
+    const val NIGERIA: String = "NG"
     const val BASE_TWO : Double = 2.0
     const val RATE_CURRENTLY_UNAVAILABLE : Int = -1
     const val IO_ERROR = "An error occurred and we are unable to process request at the moment"

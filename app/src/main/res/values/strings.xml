@@ -9,4 +9,6 @@
     <string name="recipient_receives">Recipient Receives</string>
     <string name="amount_to_send">Amount To Send</string>
     <string name="send">Send Money</string>
+    <string name="base_amount">1</string>
+    <string name="amount">Amount</string>
 </resources>

@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.widget.EditText
 import com.clevmania.penguinpay.ui.constants.Constants.BASE_TWO
 import com.clevmania.penguinpay.ui.extension.afterTextChanged
+import com.clevmania.penguinpay.ui.extension.showSnackBar
 import com.google.android.material.textfield.TextInputLayout
 import com.hbb20.CountryCodePicker
 import java.util.regex.Pattern
@@ -16,16 +17,16 @@ import kotlin.math.pow
 class ValidationException (message:String)  : Exception(message)
 
 enum class ValidationType {
-    MOBILE, NAME, BINARY_AMOUNT
+    MOBILE, NAME, REQUIRED
 }
 
 @Throws(ValidationException::class)
 fun TextInputLayout.validate(validationType: ValidationType,
                              label: String, length : Int?=null, picker: CountryCodePicker? = null,
-                             editText: EditText?= null, xChangeRate : Int?=null): String{
+                             editText: EditText?= null, localRate : Int?=null): String{
     val value = this.editText?.text.toString()
 
-    // Validate empty field
+//     Validate empty field
     if (value.trim().isBlank()) {
         this.error = "$label is required"
         this.isErrorEnabled = true
@@ -40,23 +41,11 @@ fun TextInputLayout.validate(validationType: ValidationType,
                 throw  ValidationException("$label cannot be a number")
             }
         }
-        ValidationType.BINARY_AMOUNT -> {
-            val binaryPattern = "^([0-1])$"
-            this.editText?.afterTextChanged { amount ->
-                val isBinary = amount.filter {!Pattern.compile(binaryPattern).matcher(it.toString()).find()}
-                if(isBinary.isEmpty()) {
-                    this.isErrorEnabled = false
-                    xChangeRate?.let {
-                        val amountInLocalCurrency = amount.toDecimal() * xChangeRate
-                        val amountInBinary = toBinary(amountInLocalCurrency)
-                        editText?.setText(amountInBinary)
-                    }
-
-                }else{
-                    this.error = "${isBinary.last()} is not a binary number"
-                    this.isErrorEnabled = true
-                    editText?.setText(null)
-                }
+        ValidationType.REQUIRED -> {
+            if (value.trim().isBlank()) {
+                this.error = "$label is required"
+                this.isErrorEnabled = true
+                throw  ValidationException("$label is required")
             }
         }
         ValidationType.MOBILE -> {
@@ -91,4 +80,9 @@ fun toBinary(decimalNumber: Int, binaryString: String = "") : String {
         return toBinary(decimalNumber/2, temp)
     }
     return binaryString.reversed()
+}
+
+fun String.validateBinary(): String{
+    val binaryPattern = "^([0-1])$"
+    return this.filter { !Pattern.compile(binaryPattern).matcher(it.toString()).find() }
 }

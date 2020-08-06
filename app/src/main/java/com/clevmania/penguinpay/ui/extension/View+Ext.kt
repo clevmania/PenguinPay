@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -36,3 +37,8 @@ fun View.makeGone(){ this.visibility = View.GONE
 }
 
 fun View.makeInVisible() { this.visibility = View.INVISIBLE}
+
+fun ProgressBar.toggleProgress(it: Boolean) {
+    if(it){ this.makeVisible() }
+    else{ this.makeGone() }
+}

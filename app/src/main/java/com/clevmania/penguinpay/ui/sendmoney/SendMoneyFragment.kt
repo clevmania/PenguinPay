@@ -1,27 +1,24 @@
 package com.clevmania.penguinpay.ui.sendmoney
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.clevmania.penguinpay.R
 import com.clevmania.penguinpay.model.Rates
 import com.clevmania.penguinpay.ui.constants.Constants
+import com.clevmania.penguinpay.ui.extension.afterTextChanged
 import com.clevmania.penguinpay.ui.extension.showSnackBar
-import com.clevmania.penguinpay.ui.utils.InjectorUtils
-import com.clevmania.penguinpay.ui.utils.ValidationType
-import com.clevmania.penguinpay.ui.utils.validate
-import com.google.android.material.snackbar.Snackbar
+import com.clevmania.penguinpay.ui.extension.toggleProgress
+import com.clevmania.penguinpay.ui.utils.*
 import kotlinx.android.synthetic.main.send_money_fragment.*
-import java.lang.IllegalStateException
 import kotlin.math.roundToInt
 
 class SendMoneyFragment : Fragment() {
-    private var currentExchangeRates : Rates? = null
+    private var currentExchangeRates: Rates? = null
 
     private val viewModel by viewModels<SendMoneyViewModel> { InjectorUtils.provideViewModelFactory() }
 
@@ -41,10 +38,10 @@ class SendMoneyFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        with(viewModel){
-            progress.observe(viewLifecycleOwner, Observer {uiEvent ->
+        with(viewModel) {
+            progress.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    toggleProgress(it)
+                    progressBar.toggleProgress(it)
                 }
             })
 
@@ -57,60 +54,83 @@ class SendMoneyFragment : Fragment() {
             xChangeRates.observe(viewLifecycleOwner, Observer { rateEvent ->
                 rateEvent.getContentIfNotHandled()?.let {
                     currentExchangeRates = it
+                    validateAndConvertToLocalCurrency()
                 }
             })
         }
     }
 
-    private fun toggleProgress(it: Boolean) {
-        if(it){
-
-        }else{
-
-        }
-    }
-
-    private fun validateFields(){
-        try{
-            if(getLocalExchangeRate() == Constants.RATE_CURRENTLY_UNAVAILABLE){
+    private fun validateFields() {
+        try {
+            if (getLocalExchangeRate() == Constants.RATE_CURRENTLY_UNAVAILABLE) {
                 viewModel.retrieveRates()
             }
-            val firstName = tilFirstName.validate(ValidationType.NAME,getString(R.string.first_name))
-            val lastName = tilLastName.validate(ValidationType.NAME,getString(R.string.last_name))
-            val mobile = tilMobile.validate(ValidationType.MOBILE,
-                getString(R.string.mobile),picker = countryPicker)
-            val amount = tilAmountToSend.validate(ValidationType.BINARY_AMOUNT,
-                "Amount",editText = tieAmountToReceive,xChangeRate = getLocalExchangeRate())
+            tilFirstName.validate(ValidationType.NAME, getString(R.string.first_name))
+            tilLastName.validate(ValidationType.NAME, getString(R.string.last_name))
+            tilMobile.validate(ValidationType.MOBILE,
+                getString(R.string.mobile), picker = countryPicker)
+            tilAmountToSend.validate(ValidationType.REQUIRED, getString(R.string.amount))
 
-            // We can now send this as params to some endpoint
+            // All Field checks good,
             // Upon success, show notification
 
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
         }
     }
 
-    private fun getLocalExchangeRate(): Int{
+    private fun validateAndConvertToLocalCurrency() {
+        if (getLocalExchangeRate() == Constants.RATE_CURRENTLY_UNAVAILABLE) {
+            viewModel.retrieveRates()
+            return
+        }
+
+        try {
+            tieSendAmount?.afterTextChanged { amount ->
+                binaryToLocalCurrencyConverter(amount)
+            }
+        } catch (ex: ValidationException) {
+            ex.message?.let { requireView().showSnackBar(it) }
+        }
+    }
+
+    private fun getLocalExchangeRate(): Int {
+        if (currentExchangeRates == null) throw ValidationException("Missing Exchange Rates")
         currentExchangeRates?.let {
-            return when(countryPicker.selectedCountryNameCode){
-                "NG" -> it.NGN.roundToInt()
-                "UG" -> it.UGX.roundToInt()
-                "TZ" -> it.TZS.roundToInt()
-                "KE" -> it.KES.roundToInt()
+            return when (countryPicker.selectedCountryNameCode) {
+                Constants.NIGERIA -> it.NGN.roundToInt()
+                Constants.UGANDA -> it.UGX.roundToInt()
+                Constants.TANZANIA -> it.TZS.roundToInt()
+                Constants.KENYA -> it.KES.roundToInt()
                 else -> throw IllegalStateException()
             }
         }
+
         return Constants.RATE_CURRENTLY_UNAVAILABLE
     }
 
-    private fun onCountryChanged(){
+    private fun binaryToLocalCurrencyConverter(amount : String){
+        val didFindDecimal = amount.validateBinary()
+        if (didFindDecimal.isEmpty()) {
+            tilAmountToSend.isErrorEnabled = false
+            getLocalExchangeRate().let {
+                val amountInLocalCurrency = amount.toDecimal() * it
+                val amountInBinary = toBinary(amountInLocalCurrency)
+                tieAmountToReceive.setText(amountInBinary)
+            }
+
+        } else {
+            tilAmountToSend.error = "${didFindDecimal.last()} is not a valid amount"
+            tilAmountToSend.isErrorEnabled = true
+            tieAmountToReceive?.text = null
+        }
+    }
+
+    private fun onCountryChanged() {
         countryPicker.setOnCountryChangeListener {
-            if(getLocalExchangeRate() == Constants.RATE_CURRENTLY_UNAVAILABLE){
-                viewModel.retrieveRates()
-            }else{
-                tilAmountToSend.validate(ValidationType.BINARY_AMOUNT,
-                    "Amount",editText = tieAmountToReceive,xChangeRate = getLocalExchangeRate())
-                tilMobile.validate(ValidationType.MOBILE,getString(R.string.mobile))
+            val amount = tieSendAmount.text.toString()
+            if(amount.isNotEmpty()){
+                binaryToLocalCurrencyConverter(amount)
             }
         }
     }
