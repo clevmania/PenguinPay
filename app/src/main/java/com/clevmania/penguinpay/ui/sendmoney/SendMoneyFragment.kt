@@ -1,4 +1,4 @@
-package com.clevmania.penguinpay.ui
+package com.clevmania.penguinpay.ui.sendmoney
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -11,7 +11,8 @@ import com.clevmania.penguinpay.R
 class SendMoneyFragment : Fragment() {
 
     companion object {
-        fun newInstance() = SendMoneyFragment()
+        fun newInstance() =
+            SendMoneyFragment()
     }
 
     private lateinit var viewModel: SendMoneyViewModel
