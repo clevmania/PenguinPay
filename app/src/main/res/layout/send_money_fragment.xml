@@ -137,8 +137,8 @@
                 android:drawablePadding="16dp"
                 android:fontFamily="@font/source_sans_pro_regular"
                 android:hint="@string/mobile"
-                android:inputType="number"
-                android:maxLength="11"
+                android:inputType="phone"
+                android:maxLength="13"
                 android:textColor="@color/colorTextBody" />
 
         </com.google.android.material.textfield.TextInputLayout>
