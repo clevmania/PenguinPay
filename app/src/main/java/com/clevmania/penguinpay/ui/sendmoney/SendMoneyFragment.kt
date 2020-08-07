@@ -116,7 +116,8 @@ class SendMoneyFragment : Fragment() {
             getLocalExchangeRate().let {
                 val amountInLocalCurrency = amount.toDecimal() * it
                 val amountInBinary = toBinary(amountInLocalCurrency)
-                tieAmountToReceive.setText(amountInBinary)
+                tieAmountToReceive.setText(getString(R.string.amount_payable_to_recipient,
+                    appendLocalCurrencyToAnAmount(amountInBinary)))
             }
 
         } else {
@@ -128,10 +129,24 @@ class SendMoneyFragment : Fragment() {
 
     private fun onCountryChanged() {
         countryPicker.setOnCountryChangeListener {
-            val amount = tieSendAmount.text.toString()
-            if(amount.isNotEmpty()){
-                binaryToLocalCurrencyConverter(amount)
+            try {
+                val amount = tieSendAmount.text.toString()
+                if(amount.isNotEmpty()){
+                    binaryToLocalCurrencyConverter(amount)
+                }
+            }catch (ex: ValidationException) {
+                ex.message?.let { requireView().showSnackBar(it) }
             }
+        }
+    }
+
+    private fun appendLocalCurrencyToAnAmount(amount: String): String{
+        return when(countryPicker.selectedCountryNameCode){
+            Constants.NIGERIA -> getString(R.string.nigerian_naira,amount)
+            Constants.UGANDA -> getString(R.string.uganda_shilling, amount)
+            Constants.TANZANIA -> getString(R.string.tanzania_shilling, amount)
+            Constants.KENYA -> getString(R.string.kenyan_shilling, amount)
+            else -> throw IllegalStateException()
         }
     }
 

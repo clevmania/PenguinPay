@@ -11,4 +11,9 @@
     <string name="send">Send Money</string>
     <string name="base_amount">1</string>
     <string name="amount">Amount</string>
+    <string name="amount_payable_to_recipient">%s</string>
+    <string name="uganda_shilling">USh %s</string>
+    <string name="tanzania_shilling">TSh %s</string>
+    <string name="kenyan_shilling">Ksh %s</string>
+    <string name="nigerian_naira">₦ %s</string>
 </resources>
