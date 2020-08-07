@@ -11,5 +11,6 @@
     <color name="colorTextBody">#211F1F</color>
     <color name="colorTextHeader">#085D87</color>
     <color name="colorDividerBackground">#D9F2FF</color>
+    <color name="colorCongratsHeader">#015B87</color>
 
 </resources>

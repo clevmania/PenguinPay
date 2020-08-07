@@ -16,4 +16,6 @@
     <string name="tanzania_shilling">TSh %s</string>
     <string name="kenyan_shilling">Ksh %s</string>
     <string name="nigerian_naira">₦ %s</string>
+    <string name="your_money_transfer_was_successful">Your money transfer was successful</string>
+    <string name="congratulations">Congratulations</string>
 </resources>

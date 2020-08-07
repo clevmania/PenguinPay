@@ -73,6 +73,7 @@ class SendMoneyFragment : Fragment() {
 
             // All Field checks good,
             // Upon success, show notification
+            requireContext().showSuccessDialog()
 
         } catch (ex: Exception) {
             ex.printStackTrace()
