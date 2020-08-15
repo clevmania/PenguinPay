@@ -1,4 +1,4 @@
-package com.clevmania.penguinpay.ui.constants
+package com.clevmania.penguinpay.constants
 
 /**
  * @author by Lawrence on 8/6/20.

@@ -1,6 +1,6 @@
-package com.clevmania.penguinpay.ui.utils
+package com.clevmania.penguinpay.utils
 
-import com.clevmania.penguinpay.PenguinPay
+import com.clevmania.penguinpay.api.PenguinPay
 import com.clevmania.penguinpay.data.PenguinPayRepository
 import com.clevmania.penguinpay.data.PenguinPayService
 import com.clevmania.penguinpay.ui.sendmoney.SendMoneyViewModelFactory

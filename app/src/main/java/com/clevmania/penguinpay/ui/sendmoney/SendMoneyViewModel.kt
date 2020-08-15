@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clevmania.penguinpay.data.PenguinPayDataSource
 import com.clevmania.penguinpay.model.Rates
-import com.clevmania.penguinpay.ui.constants.Constants
-import com.clevmania.penguinpay.ui.extension.toDefaultErrorMessage
-import com.clevmania.penguinpay.ui.utils.EventUtils
+import com.clevmania.penguinpay.constants.Constants
+import com.clevmania.penguinpay.extension.toDefaultErrorMessage
+import com.clevmania.penguinpay.utils.EventUtils
 import kotlinx.coroutines.launch
 
 class SendMoneyViewModel(private val dataSource : PenguinPayDataSource) : ViewModel() {

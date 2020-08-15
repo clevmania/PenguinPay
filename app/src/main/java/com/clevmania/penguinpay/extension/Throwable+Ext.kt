@@ -1,6 +1,6 @@
-package com.clevmania.penguinpay.ui.extension
+package com.clevmania.penguinpay.extension
 
-import com.clevmania.penguinpay.ui.constants.Constants
+import com.clevmania.penguinpay.constants.Constants
 import com.google.gson.JsonParser
 import retrofit2.HttpException
 import java.io.IOException

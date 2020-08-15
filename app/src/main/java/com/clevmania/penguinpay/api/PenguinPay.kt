@@ -1,4 +1,4 @@
-package com.clevmania.penguinpay
+package com.clevmania.penguinpay.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

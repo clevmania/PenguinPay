@@ -1,4 +1,4 @@
-package com.clevmania.penguinpay.ui.utils
+package com.clevmania.penguinpay.utils
 
 import android.app.AlertDialog
 import android.content.Context

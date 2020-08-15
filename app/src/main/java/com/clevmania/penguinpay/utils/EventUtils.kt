@@ -1,4 +1,4 @@
-package com.clevmania.penguinpay.ui.utils
+package com.clevmania.penguinpay.utils
 
 /**
  * @author by Lawrence on 8/6/20.

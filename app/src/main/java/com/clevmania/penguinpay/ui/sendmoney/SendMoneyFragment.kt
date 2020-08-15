@@ -9,11 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.clevmania.penguinpay.R
 import com.clevmania.penguinpay.model.Rates
-import com.clevmania.penguinpay.ui.constants.Constants
-import com.clevmania.penguinpay.ui.extension.afterTextChanged
-import com.clevmania.penguinpay.ui.extension.showSnackBar
-import com.clevmania.penguinpay.ui.extension.toggleProgress
-import com.clevmania.penguinpay.ui.utils.*
+import com.clevmania.penguinpay.constants.Constants
+import com.clevmania.penguinpay.extension.afterTextChanged
+import com.clevmania.penguinpay.extension.showSnackBar
+import com.clevmania.penguinpay.extension.toggleProgress
+import com.clevmania.penguinpay.utils.*
 import kotlinx.android.synthetic.main.send_money_fragment.*
 import kotlin.math.roundToInt
 

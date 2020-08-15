@@ -1,10 +1,8 @@
-package com.clevmania.penguinpay.ui.utils
+package com.clevmania.penguinpay.utils
 
 import android.text.TextUtils
 import android.widget.EditText
-import com.clevmania.penguinpay.ui.constants.Constants.BASE_TWO
-import com.clevmania.penguinpay.ui.extension.afterTextChanged
-import com.clevmania.penguinpay.ui.extension.showSnackBar
+import com.clevmania.penguinpay.constants.Constants.BASE_TWO
 import com.google.android.material.textfield.TextInputLayout
 import com.hbb20.CountryCodePicker
 import java.util.regex.Pattern

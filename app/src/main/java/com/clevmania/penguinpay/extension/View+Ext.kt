@@ -1,4 +1,4 @@
-package com.clevmania.penguinpay.ui.extension
+package com.clevmania.penguinpay.extension
 
 import android.text.Editable
 import android.text.TextWatcher
